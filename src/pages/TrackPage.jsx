@@ -84,7 +84,7 @@ try {
         </div>
         <div className="text-sm flex items-center space-x-3">
           <span className="text-lg">👤</span>
-          <span className="font-medium">IT Admin</span>
+          <span className="font-medium">{user.firstName}</span>
           <button
             className="text-lg hover:opacity-80 transition"
             title="Logout"
@@ -101,36 +101,6 @@ try {
       {/* Page Content */}
       <div className="max-w-8xl mx-auto px-6 space-y-4">
         <h1 className="text-4xl font-bold mb-4">Get Quote</h1>
-
-        {/* Filter Card */}
-        <div className="bg-white rounded-md shadow-sm p-4 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-            <select className="border border-gray-300 p-2 appearance-none rounded w-full bg-white">
-              <option>Select Field</option>
-              <option>Sender Company</option>
-              <option>Carrier</option>
-              <option>Ship Date</option>
-              <option>Estimated Delivery</option>
-              <option>Receiver Country</option>
-              <option>Sender Postal Code</option>
-              <option>Receiver Postal Code</option>
-              <option>Pickup Number</option>
-              <option>Status</option>
-            </select>
-
-            <input
-              type="text"
-              placeholder="Type to Search..."
-              className="border border-gray-300 p-2 rounded w-full bg-white"
-            />
-
-            <div className="flex gap-2 w-full">
-              <button className="bg-[#28C76F] text-black font-semibold px-3 py-2 rounded flex-1">
-                Search
-              </button>
-            </div>
-          </div>
-        </div>
 
         {/* Loading / Error */}
         {loading && <p className="text-gray-700">Loading data...</p>}
@@ -162,11 +132,11 @@ try {
                   <td className="p-2">{row.receiverCompany}</td>
                   <td className="p-2">{row.carrier}</td>
                   <td className="p-2">{row.shipDate}</td>
-                  <td className="p-2">{row.trackingNumber}</td>
+                  <td className="p-2">{row.tracking}</td>
                   <td className="p-2">{row.estimatedDelivery}</td>
-                  <td className="p-2">{row.customer}</td>
-                  <td className="p-2">{row.senderCountry}</td>
-                  <td className="p-2">{row.receiverCountry}</td>
+                  <td className="p-2">{row.customerId}</td>
+                  <td className="p-2">{row.senderPostalCode}</td>
+                  <td className="p-2">{row.receiverPostalCode}</td>
                   <td className="p-2">{row.pickupNumber || "-"}</td>
                   <td className="p-2">
                     <span

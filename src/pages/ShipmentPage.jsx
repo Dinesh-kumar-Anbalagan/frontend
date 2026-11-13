@@ -54,15 +54,15 @@ let user = null;
       weight:"",
     },
     sender: {
-      address: "",
-      country: "",
+       address: "",
+      country: "United Kingdom",
       postalCode: "",
       county: "",
       locality: "",
     },
     receiver: {
       address: "",
-      country: "",
+      country: "United Kingdom",
       postalCode: "",
       county: "",
       locality: "",
@@ -144,7 +144,7 @@ try {
         </div>
         <div className="text-sm flex items-center space-x-3">
           <span className="text-lg">👤</span>
-          <span className="font-medium">IT Admin</span>
+          <span className="font-medium">{user.firstName}</span>
           <button
             className="text-lg hover:opacity-80 transition"
             title="Logout"
@@ -236,7 +236,7 @@ try {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium">Width (in.)</label>
+            <label className="block text-sm font-medium">Width (kg.)</label>
             <input
               type="number"
               className={`input input-bordered w-full ${
@@ -320,7 +320,8 @@ try {
             <input
               type="text"
               className="input input-bordered w-full mb-2"
-              placeholder="Company or Name"
+              placeholder="Address Line"
+              value={form.sender.address}
               onChange={(e) => {
               setForm({
                 ...form,
@@ -333,7 +334,7 @@ try {
               }}
             />
             {errors.senderCompanyName && (
-              <p className="text-xs text-red-600 mt-1">Company is required.</p>
+              <p className="text-xs text-red-600 mt-1">AddressLine is required.</p>
             )}
             </div>
             <div >
@@ -430,7 +431,7 @@ try {
             <input
               type="text"
               className="input input-bordered w-full mb-2"
-              placeholder="Company or Name"
+              placeholder="Address Line"
               value={form.receiver.address}
               onChange={(e) => {
               setForm({
@@ -444,7 +445,7 @@ try {
               }}
             />
             {errors.receiverCompanyName && (
-              <p className="text-xs text-red-600 mt-1"> company is required.</p>
+              <p className="text-xs text-red-600 mt-1"> AddressLine is required.</p>
             )}
             </div>
             <div >

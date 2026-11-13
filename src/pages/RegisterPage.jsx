@@ -8,6 +8,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [resp, setRes] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async () => {
@@ -16,10 +17,14 @@ export default function RegisterPage() {
     setSuccess("");
     try {
       const res = await AuthAPI.register(details);
+      console.log(res);
+      setRes(res);
       setSuccess("Register Successfully");
       navigate("/login")
     } catch (err) {
-      alert("Something went wrong, Please Try Again!!");
+      console.log(resp.data);
+      console.log(err);
+      alert(err.response.data.message, ", Please Try Again!!");
     } finally {
       setLoading(false);
     }
@@ -29,7 +34,7 @@ export default function RegisterPage() {
      <div
       className="min-h-screen bg-center flex items-center justify-center"
       style={{
-        backgroundColor: "#f0f0f0", // fallback background color
+        backgroundColor: "#f0f0f0", 
         backgroundImage:
           "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80')",
         backgroundRepeat: "no-repeat",
@@ -59,28 +64,28 @@ export default function RegisterPage() {
           placeholder="Last Name"
           value={details.lastName}
           onChange={(e) => setDetails({ ...details, lastName: e.target.value })}
-          className="w-full p-3 border  text-white rounded-lg mb-4 focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-full p-3 border  text-white rounded-lg mb-4 focus:outline-none focus:ring focus:ring-blue-300 bg-black"
         />
         <input
           type="text"
           placeholder="Phone Number"
           value={details.phoneNumber}
           onChange={(e) => setDetails({ ...details, phoneNumber: e.target.value })}
-          className="w-full p-3 border  text-white rounded-lg mb-4 focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-full p-3 border  text-white rounded-lg mb-4 focus:outline-none focus:ring focus:ring-blue-300 bg-black"
         />
         <input
           type="email"
           placeholder="Email"
           value={details.email}
           onChange={(e) => setDetails({ ...details, email: e.target.value })}
-          className="w-full p-3 border  text-white rounded-lg mb-4 focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-full p-3 border  text-white rounded-lg mb-4 focus:outline-none focus:ring focus:ring-blue-300 bg-black"
         />
         <input
           type="password"
           placeholder="Password"
           value={details.password}
           onChange={(e) => setDetails({ ...details, password: e.target.value })}
-          className="w-full p-3 border  text-white rounded-lg mb-4 focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-full p-3 border  text-white rounded-lg mb-4 focus:outline-none focus:ring focus:ring-blue-300 bg-black"
         />
 
         {error && <p className="text-red-500 mb-2">{error}</p>}

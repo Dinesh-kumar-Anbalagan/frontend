@@ -74,7 +74,7 @@ function ShipmentDetail({ shipment }) {
         </div>
         <div className="text-sm flex items-center space-x-3">
           <span className="text-lg">👤</span>
-          <span className="font-medium">IT Admin</span>
+          <span className="font-medium">{user.firstName}</span>
           <button
             className="text-lg hover:opacity-80 transition"
             title="Logout"

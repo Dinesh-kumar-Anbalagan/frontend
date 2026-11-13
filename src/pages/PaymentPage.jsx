@@ -7,8 +7,6 @@ import axios from 'axios';
 
 const stripePromise = loadStripe('pk_test_51S2BvcJylH4Efa57VjNh6tCkq0liOBxBw6BM9VdKvgI9im9GV7LeoSmvZ2BkO6EfpTEyInv7GquQyRGjYZX5kUOw00NOI2ogUR');
 
-// Replace with your Stripe public key
-
 function StripePaymentForm({ amount }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -56,13 +54,18 @@ function StripePaymentForm({ amount }) {
           }
         const res = await ShipmentAPI.offerUpdate({request});
         const res1 = await ShipmentAPI.reportLabel({request:{"shipmentId":request.shipmentId}});
-        const  fileName  = res1.data.fileName;
+        console.log("hello");
+        const  fileName  = res1.data.filename;
         const base64String = res1.data.base64;
 
-        const link = document.createElement("a");
-        link.href = `data:application/pdf;base64,${base64String}`;
-        link.download = filename;
-        link.click();
+        if (base64String) {
+    const link = document.createElement("a");
+    link.href = `data:application/pdf;base64,${base64String}`;
+    link.download = fileName;
+    link.click();
+} else {
+    console.error("Invalid base64 string");
+}
 
         navigate("/track", { state: { userData: user}});
       }

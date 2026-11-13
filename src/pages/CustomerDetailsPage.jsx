@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { getCustomerById } from "../api"; 
 import { CustomerAPI } from '../api';
 
 import { Pencil } from "lucide-react";
@@ -18,11 +17,8 @@ export default function CustomerDetailPage() {
   const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // track which field is being edited
   const [editField, setEditField] = useState(null);
   const [fieldValue, setFieldValue] = useState("");
-
-  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,9 +29,10 @@ export default function CustomerDetailPage() {
 
     const fetchCustomer = async () => {
       try {
-        const data = await getCustomerById(userData.customerID);
-        console.log(userData);
-        setCustomer(userData);
+   
+        const data = await CustomerAPI.getCustomerField({"customerID":userData.customerID});
+        console.log(data.data);
+        setCustomer(data.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -54,14 +51,13 @@ export default function CustomerDetailPage() {
     navigate("/track", { state: { userData: userData}});
   };
 
-  // handle save on Enter
   const handleKeyDown = async (e, field) => {
     if (e.key === "Enter") {
       try {
        if (["address", "postalCode", "county", "country"].includes(field)) {
           const updatedAddress = {
-          ...(customer.address || {}),  // fallback to {} if address is null
-          [field]: fieldValue           // update only the changed field
+          ...(customer.address || {}),
+          [field]: fieldValue
         };
         customer.address = updatedAddress;
 } else {
@@ -71,12 +67,13 @@ console.log(customer)
         const updated = await CustomerAPI.updateCustomerField(
           customer
         );
-        console.log(updated);
-        setCustomer(updated); // update UI
+        const data = await CustomerAPI.getCustomerField({"customerID":userData.customerID});
+        console.log(data.data);
+        setCustomer(data.data); 
       } catch (error) {
         console.error("Update failed:", error);
       } finally {
-        setEditField(null); // exit edit mode
+        setEditField(null);
       }
     }
   };
@@ -112,7 +109,7 @@ const {
           autoFocus
           onChange={(e) => setFieldValue(e.target.value)}
           onKeyDown={(e) => handleKeyDown(e, field)}
-          onBlur={() => setEditField(null)} // cancel edit on blur
+          onBlur={() => setEditField(null)} 
         />
       ) : (
         <div className="flex items-center space-x-2">
@@ -141,7 +138,7 @@ const {
         </div>
         <div className="text-sm flex items-center space-x-3">
           <span className="text-lg">👤</span>
-          <span className="font-medium">IT Admin</span>
+          <span className="font-medium">{firstName}</span>
           <button
             className="text-lg hover:opacity-80 transition"
             title="Logout"
@@ -211,7 +208,7 @@ const {
           </button>
           <button
             onClick={handleTrack}
-            className="bg-[#28C76F] text-white px-6 py-2 rounded-md font-semibold shadow hover:bg-[#20a65a] transition"
+            className="bg-[#00A0DF] text-white px-6 py-2 rounded-md font-semibold shadow hover:bg-[#20a65a] transition"
           >
             Track
           </button>
